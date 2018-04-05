@@ -2,7 +2,7 @@
   "name": "firegento/pdf2",
   "description": "FireGento Pdf overwrites standard PDF layouts for invoices and shipments.",
   "require": {
-    "php": "~5.5.0|~5.6.0|~7.0.0",
+    "php": "~5.5.0|~5.6.0|~7.0",
     "magento/module-store": "*",
     "magento/module-backend": "*",
     "magento/framework": "*",
