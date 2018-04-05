@@ -6,7 +6,7 @@
     "magento/module-store": "*",
     "magento/module-backend": "*",
     "magento/framework": "*",
-    "dompdf/dompdf": "0.7.x@beta"
+    "dompdf/dompdf": "~0.8.2"
   },
   "type": "magento2-module",
   "license": "GPL-3.0",
