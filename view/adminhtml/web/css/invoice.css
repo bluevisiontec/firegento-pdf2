@@ -1,0 +1,147 @@
+@page { 
+    margin: 5mm; 
+    margin-left: 17mm;
+}
+
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    max-width: 210mm;
+}
+
+.header {
+    border-bottom: 1px solid #AAA;
+    vertical-align: bottom;
+    height: 1.3cm;
+    font-size: 8px;
+    margin-left: 0;
+    width: 100%;
+    width: 183mm;
+    margin-bottom: 1cm;
+    position: relative;
+    margin-bottom: 80mm;
+}
+
+.header .logo {
+    float: left;
+    margin-right: 3mm;
+}
+.header .logo img {
+    max-width: 6cm;
+    max-height: 2cm;
+}
+
+.header .company {
+    float: left;
+    margin-top: 1cm;
+    
+}
+
+.letter-window {
+    position: absolute;
+    top: 45.8mm; /*50.8mm - 5mm)*/
+    left: 8mm;/*calc(25mm - 17mm);*/
+    width: 9.3cm;
+    height: 3.9cm;
+    border-collapse: collapse;
+}
+
+.letter-window .sender {
+   font-size: 0.69em;
+   border-bottom: 1px solid #AAA;
+}
+
+.address .recipient {
+  margin-left: 5mm;
+  margin-top: 1mm;
+}
+
+.invoice-basic {
+    float: right;
+}
+
+.order-items {
+    border: 1px solid #EEE;
+}
+
+.order-items table {
+    border-collapse: collapse;
+}
+
+.order-items table td,
+.order-items table th {
+    padding: 3px 5px;
+}
+
+.order-items th {
+    border: 1px solid #999;
+}
+
+.order-items td.price,
+.order-items td.qty,
+.order-items td.taxPercent {
+    text-align: center;
+}
+.order-items td.subtotal {
+    text-align: right;
+}
+
+.taxbox {
+    float: left;
+    width: 49%;
+}
+
+.summary {
+    float: right;
+    width: 49%;
+}
+
+table.totals {
+    float: right;
+}
+table.totals th {
+    font-weight: bold;
+    paddding-right: 1cm;
+    text-align: left;
+}
+table.totals td {
+    text-align: right;
+}
+
+.taxbox table {
+    border:thin solid #E3E4EA;
+    border-collapse: collapse;
+}
+.taxbox th {
+    background-color: #EEEEEE;
+    border: thin solid #000000;
+    padding: 3px 10px;
+}
+.taxbox td {
+    border-top : thin solid #EEEEEE;
+    padding: 3px;
+}
+
+.taxbox td.percent {
+    text-align: center;
+}
+.taxbox td.amount,
+.taxbox td.baseamount {
+    text-align: right;
+}
+
+.footercol {
+    float: left;
+    width: 33%;
+}
+
+footer {
+    position: absolute;
+    width: 100%;
+    bottom: 3cm;
+    font-size: 0.8em;
+    padding-top: 5px;
+    border-top: 1px solid #BBB;
+}

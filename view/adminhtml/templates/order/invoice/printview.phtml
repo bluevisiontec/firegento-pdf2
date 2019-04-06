@@ -1,3 +1,181 @@
 <?php /** @var $this FireGento\Pdf\Block\Adminhtml\Order\Invoice\PrintView */ ?>
 
-<?php echo $this->getInvoice()->getIncrementId() ?>
+<style type="text/css">
+  <?php echo $this->getAssetRepository()->createAsset('FireGento_Pdf::css/invoice.css')->getContent(); ?>
+</style>
+
+
+
+<!-- Header -->
+<div class="header">
+<?php if($this->getLogoUrl()):?>
+    <div class="logo">
+        <img src="<?php echo $this->getLogoUrl(); ?>" alt="logo" />
+    </div>
+    <div class="company">
+        <?php echo $this->getConfig()->getValue('general/imprint/company_first'); ?> &bull; <?php echo $this->getConfig()->getValue('general/imprint/street'); ?> &bull; <?php echo $this->getConfig()->getValue('general/imprint/zip'); ?> <?php echo $this->getConfig()->getValue('general/imprint/city'); ?> &bull; <?php echo $this->getConfig()->getValue('general/imprint/country'); ?>
+    </div>
+<?php endif; ?>
+</div>
+<div style="clear:both">&nbsp;</div>
+
+
+
+<!-- Letter Window -->
+<div class="letter-window">
+    <div class="sender"><?php echo $this->getConfig()->getValue('general/imprint/company_first'); ?> &bull; <?php echo $this->getConfig()->getValue('general/imprint/street'); ?> &bull; <?php echo $this->getConfig()->getValue('general/imprint/zip'); ?> <?php echo $this->getConfig()->getValue('general/imprint/city'); ?> &bull; <?php echo $this->getConfig()->getValue('general/imprint/country'); ?></div>
+    <div class="address">
+        <div class="recipient">
+        <?php
+            $billingAddress = $this->getInvoice()->getOrder()->getBillingAddress();
+        ?>
+        <?php if($billingAddress->getCompany()): ?>
+            <b><?php echo $billingAddress->getCompany(); ?> </b><br/>
+        <?php endif; ?>
+        <?php echo $billingAddress->getFirstname(); ?> <?php echo $billingAddress->getLastname(); ?><br/>
+        <?php echo implode(" ",$billingAddress->getStreet()); ?><br/>
+        <?php echo $billingAddress->getPostcode(); ?> <?php echo $billingAddress->getCity(); ?><br/>
+        <?php echo $billingAddress->getCountryId(); ?>
+        </div>
+    </div>
+    
+</div>
+
+<div style="clear:both">&nbsp;</div>
+
+<div class="invoice-basic">
+    <?php echo __('Invoice-Nr.'); ?>: <?php echo $this->getInvoice()->getIncrementId() ?><br/>
+    <?php echo __('Invoice date'); ?>: <?php echo $this->formatDate($this->getInvoice()->getCreatedAt(), \IntlDateFormatter::MEDIUM ); ?>
+</div>
+
+<h1><?php echo __('Invoice # '); ?><?php echo $this->getInvoice()->getIncrementId() ?></h1>
+
+<!-- Order items -->
+
+<div class="order-items">
+    <table>
+        <thead>
+            <tr>
+                <th><?php echo __('SKU'); ?></th>
+                <th><?php echo __('Products'); ?></th>
+                <th><?php echo __('Price'); ?></th>
+                <th><?php echo __('Qty'); ?></th>
+                <th><?php echo __('Tax'); ?></th>
+                <th><?php echo __('Subtotal'); ?></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($this->getInvoice()->getAllItems() as $item): ?>
+            <tr>
+                <td class="sku"><?php echo $item->getSku(); ?></td>
+                <td class="name">
+                    <?php echo $item->getName(); ?>
+                    <?php // TODO: item options, configurable products ?>
+                </td>
+                <td class="price"><?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($item->getPriceInclTax(),true,false); ?></td>
+                <td class="qty"><?php echo $item->getQty() * 1; ?></td>
+                <td class="taxPercent"><?php echo (float) $item->getOrderItem()->getTaxPercent() . "%";?></td>
+                <td class="Subtotal"><?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($item->getRowTotalInclTax(),true,false); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div style="clear:both">&nbsp;</div>
+<div class="taxbox">
+    <table>
+        <thead>
+            <tr>
+                <th class="desc"><?php echo __('Tax description'); ?></th>
+                <th class="percent"><?php echo __('Tax percentage'); ?></th>
+                <th class="baseamount"><?php echo __('Tax base amount'); ?></th>
+                <th class="amount"><?php echo __('Tax amount'); ?></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($this->getFullTaxInfo() as $percent => $tax): ?>
+            <tr> 
+                <td class="desc"><?php echo $tax['title']; ?></td>
+                <td class="percent"><?php echo $percent; ?>%</td>
+                <td class="baseamount"><?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($tax['tax_base_amount'],true,false); ?></td>
+                <td class="amount"><?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($tax['amount'],true,false); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="summary">
+    <table class="totals">
+        <?php foreach($this->getTotals() as $total):?>
+            <tr>
+                <th><?php echo $total['label'];?></th>
+                <td><?php echo $total['amount'];?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+</div>
+
+
+<div style="clear:both">&nbsp;</div>
+
+<footer>
+    <div class="footercol">
+        <b><?php echo $this->getConfig()->getValue('general/imprint/company_first'); ?></b><br/>
+        <?php echo __("CEO"); ?> <?php echo $this->getConfig()->getValue('general/imprint/ceo'); ?><br/>
+        <?php echo $this->getConfig()->getValue('general/imprint/street'); ?><br/>
+        <?php echo $this->getConfig()->getValue('general/imprint/zip'); ?> <?php echo $this->getConfig()->getValue('general/imprint/city'); ?><br/>
+        <?php echo $this->getConfig()->getValue('general/imprint/country'); ?><br/>
+        <br/>
+        <?php echo $this->getConfig()->getValue('general/imprint/court'); ?> /
+        <?php echo $this->getConfig()->getValue('general/imprint/register_number'); ?>
+        
+    </div>
+
+    <div class="footercol">
+        <?php if($this->getConfig()->getValue('general/imprint/telephone')): ?>
+            <?php echo __("Phone"); ?> <?php echo $this->getConfig()->getValue('general/imprint/telephone'); ?><br/>
+        <?php endif; ?>
+        <?php if($this->getConfig()->getValue('general/imprint/fax')): ?>
+            <?php echo __("Fax"); ?> <?php echo $this->getConfig()->getValue('general/imprint/fax'); ?><br/>
+        <?php endif; ?>
+        <?php if($this->getConfig()->getValue('general/imprint/email')): ?>
+            <?php echo __("E-Mail"); ?> <?php echo $this->getConfig()->getValue('general/imprint/email'); ?><br/>
+        <?php endif; ?>
+        <?php if($this->getConfig()->getValue('general/imprint/web')): ?>
+            <?php echo __("Internet"); ?> <?php echo $this->getConfig()->getValue('general/imprint/web'); ?><br/>
+        <?php endif; ?>
+        <?php if($this->getConfig()->getValue('general/imprint/web')): ?>
+            <br/>
+            <?php echo __("VAT ID"); ?> <?php echo $this->getConfig()->getValue('general/imprint/vat_id'); ?><br/>
+        <?php endif; ?>
+    </div>
+
+    <div class="footercol">
+        <?php if($this->getConfig()->getValue('general/imprint/bank_name')): ?>
+            <?php echo __("Bank"); ?> <?php echo $this->getConfig()->getValue('general/imprint/bank_name'); ?><br/>
+        <?php endif; ?>
+        <?php if($this->getConfig()->getValue('general/imprint/account_owner')): ?>
+            <?php echo __("Account owner"); ?> <?php echo $this->getConfig()->getValue('general/imprint/account_owner'); ?><br/>
+        <?php endif; ?>
+        <?php if($this->getConfig()->getValue('general/imprint/bank_code_number')): ?>
+            <?php echo __("Bank code"); ?> <?php echo $this->getConfig()->getValue('general/imprint/bank_code_number'); ?><br/>
+        <?php endif; ?>
+        <?php if($this->getConfig()->getValue('general/imprint/bank_account')): ?>
+            <?php echo __("Account No."); ?> <?php echo $this->getConfig()->getValue('general/imprint/bank_account'); ?><br/>
+        <?php endif; ?>
+        <?php if($this->getConfig()->getValue('general/imprint/iban')): ?>
+            <?php echo __("BIC"); ?> <?php echo $this->getConfig()->getValue('general/imprint/iban'); ?><br/>
+        <?php endif; ?>
+        <?php if($this->getConfig()->getValue('general/imprint/swift')): ?>
+            <?php echo __("IBAN"); ?> <?php echo $this->getConfig()->getValue('general/imprint/swift'); ?><br/>
+        <?php endif; ?>
+    </div>
+</footer>
+
+<?php //exit; ?>
+
+
+
+<!-- Footer -->

@@ -96,6 +96,7 @@ abstract class AbstractEngine extends AbstractPdf
     protected function getDomPdf()
     {
         $domPdf = new Dompdf();
+        $domPdf->setPaper('A4', 'portrait');
 
         return $domPdf;
     }
