@@ -68,7 +68,7 @@ body {
 
 .order-items table {
     border-collapse: collapse;
-    width. 100%;
+    width: 100%;
 }
 
 .order-items table td,
@@ -91,12 +91,12 @@ body {
 
 .taxbox {
     float: left;
-    width: 49%;
+    width: 55%;
 }
 
 .summary {
     float: right;
-    width: 49%;
+    width: 45%;
 }
 
 table.totals {
@@ -104,7 +104,7 @@ table.totals {
 }
 table.totals th {
     font-weight: bold;
-    paddding-right: 1cm;
+    padding-right: 1cm;
     text-align: left;
 }
 table.totals td {
@@ -114,6 +114,7 @@ table.totals td {
 .taxbox table {
     border:thin solid #E3E4EA;
     border-collapse: collapse;
+    width: 100%;
 }
 .taxbox th {
     background-color: #EEEEEE;

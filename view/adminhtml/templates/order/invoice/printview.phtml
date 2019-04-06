@@ -126,6 +126,12 @@
 
 <div style="clear:both">&nbsp;</div>
 
+<div class="paymentinfo">
+    <?=__("Payment Method")?>: <?=$this->getInvoice()->getOrder()->getPayment()->getMethodInstance()->getTitle()?>
+</div>
+
+<div style="clear:both">&nbsp;</div>
+
 <footer>
     <div class="footercol">
         <b><?php echo $this->getConfig()->getValue('general/imprint/company_first'); ?></b><br/>
