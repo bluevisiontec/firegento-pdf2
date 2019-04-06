@@ -56,7 +56,9 @@
     <table>
         <thead>
             <tr>
-                <th><?php echo __('SKU'); ?></th>
+                <?php if($this->getConfig()->getValue('sales_pdf/invoice/show_sku')):?>
+                    <th><?php echo __('SKU'); ?></th>
+                <?php endif; ?>
                 <th><?php echo __('Products'); ?></th>
                 <th><?php echo __('Price'); ?></th>
                 <th><?php echo __('Qty'); ?></th>
@@ -67,7 +69,9 @@
         <tbody>
         <?php foreach ($this->getInvoice()->getAllItems() as $item): ?>
             <tr>
-                <td class="sku"><?php echo $item->getSku(); ?></td>
+                <?php if($this->getConfig()->getValue('sales_pdf/invoice/show_sku')):?>
+                    <td class="sku"><?php echo $item->getSku(); ?></td>
+                <?php endif; ?>
                 <td class="name">
                     <?php echo $item->getName(); ?>
                     <?php // TODO: item options, configurable products ?>

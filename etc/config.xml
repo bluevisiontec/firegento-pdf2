@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <sales_pdf>
+            <invoice>
+                <show_sku>1</show_sku>
+            </invoice>
+        </sales_pdf>
+    </default>
+</config>

@@ -19,6 +19,13 @@
                     <label>PDF Engine</label>
                     <source_model>FireGento\Pdf\Model\System\Config\Source\Invoice\Engine</source_model>
                 </field>
+                <field id="show_sku" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show SKU</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="sales_pdf/invoice/engine">FireGento\Pdf\Model\Engine\Invoice\Standard</field>
+                    </depends>
+                </field>
             </group>
         </section>
     </system>
