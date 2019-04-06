@@ -121,7 +121,7 @@ class PrintView extends \Magento\Backend\Block\Template
         $taxItem = $objectManager->create('Magento\Sales\Model\ResourceModel\Order\Tax\Item');
         $taxItems = $taxItem->getTaxItemsByOrderId($order->getId());
         
-        $taxes = array();
+        $taxes = [];
         
         $shippingPercent = false;
         
@@ -131,11 +131,11 @@ class PrintView extends \Magento\Backend\Block\Template
             $taxPercent = (float) $tax['tax_percent'];
             
             if(!isset($taxes[$taxPercent])) {
-                $taxes[$taxPercent] = array(
+                $taxes[$taxPercent] = [
                         "tax_base_amount" => 0,
                         "title" => $tax['title'],
                         "amount" => $tax['real_base_amount'],
-                );
+                ];
             } else {
                 $taxes[$taxPercent]["amount"] += $tax['real_base_amount'];
             }
@@ -147,11 +147,13 @@ class PrintView extends \Magento\Backend\Block\Template
             
         }
         
-        foreach($this->getInvoice()->getAllItems() as $item) {
-            $percent = (float) $item->getOrderItem()->getTaxPercent();
-            $taxes[$percent]["tax_base_amount"] += $item->getRowTotal();
-            $taxes[$percent]["tax_base_amount"] -= $item->getDiscountAmount();
-            $taxes[$percent]["tax_base_amount"] += $item->getHiddenTaxAmount();
+        if(count($taxes)) {
+            foreach($this->getInvoice()->getAllItems() as $item) {
+                $percent = (float) $item->getOrderItem()->getTaxPercent();
+                $taxes[$percent]["tax_base_amount"] += $item->getRowTotal();
+                $taxes[$percent]["tax_base_amount"] -= $item->getDiscountAmount();
+                $taxes[$percent]["tax_base_amount"] += $item->getHiddenTaxAmount();
+            }
         }
         
         

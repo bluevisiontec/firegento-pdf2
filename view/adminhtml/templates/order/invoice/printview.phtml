@@ -83,6 +83,7 @@
 </div>
 
 <div style="clear:both">&nbsp;</div>
+<?php if(count($this->getFullTaxInfo() ) ):?>
 <div class="taxbox">
     <table>
         <thead>
@@ -105,6 +106,7 @@
         </tbody>
     </table>
 </div>
+<?php endif;?>
 
 <div class="summary">
     <table class="totals">
