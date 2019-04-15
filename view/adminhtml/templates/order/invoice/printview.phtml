@@ -157,9 +157,16 @@
         <?php endif; ?>
         <?php if($this->getConfig()->getValue('general/imprint/web')): ?>
             <?php echo __("Internet"); ?> <?php echo $this->getConfig()->getValue('general/imprint/web'); ?><br/>
-        <?php endif; ?>
-        <?php if($this->getConfig()->getValue('general/imprint/web')): ?>
+        <?php endif; ?>        
+        
+        <?php if($this->getConfig()->getValue('general/imprint/tax_number') || $this->getConfig()->getValue('general/imprint/vat_id')): ?>
             <br/>
+        <?php endif; ?>   
+        
+        <?php if($this->getConfig()->getValue('general/imprint/tax_number')): ?>
+            <?php echo __("Tax number"); ?> <?php echo $this->getConfig()->getValue('general/imprint/tax_number'); ?><br/>
+        <?php endif; ?>
+        <?php if($this->getConfig()->getValue('general/imprint/vat_id')): ?>
             <?php echo __("VAT ID"); ?> <?php echo $this->getConfig()->getValue('general/imprint/vat_id'); ?><br/>
         <?php endif; ?>
     </div>
